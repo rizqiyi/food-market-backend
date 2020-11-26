@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const router = express.Router();
 const { getFoods, postFood } = require("../controllers/foodController");
+const middleware = require("../../middlewares/middleware");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,6 +17,10 @@ const upload = multer({
   storage,
 });
 
-router.route("/").get(getFoods).post(upload.single("photo"), postFood);
+router
+  .route("/")
+  .all(middleware)
+  .get(getFoods)
+  .post(upload.single("photo"), postFood);
 
 module.exports = router;

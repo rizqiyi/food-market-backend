@@ -2,6 +2,9 @@ const UserSchema = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+//@desc     Register a user
+//@routes   POST
+//@access   Public
 exports.postRegister = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -9,10 +12,10 @@ exports.postRegister = async (req, res) => {
     const isEmpty = !username || !email || !password;
 
     if (isEmpty)
-      return res.status(400).send({ message: "Please enter all fields" });
+      return res.status(400).json({ message: "Please enter all fields" });
 
     await UserSchema.findOne({ email }).then((user) => {
-      if (user) return res.status(400).send({ message: "User already exists" });
+      if (user) return res.status(400).json({ message: "User already exists" });
 
       const newUser = new UserSchema({
         username,

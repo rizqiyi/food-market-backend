@@ -1,8 +1,9 @@
 const FoodSchema = require("../models/foodModel");
+const UserSchema = require("../../users/models/userModel");
 
 //@desc     GET all foods
 //@routes   GET
-//@access   Public
+//@access   Private
 exports.getFoods = async (req, res) => {
   try {
     const foods = await FoodSchema.find();
@@ -20,6 +21,9 @@ exports.getFoods = async (req, res) => {
   }
 };
 
+//@desc     Create food
+//@routes   POST
+//@access   Private
 exports.postFood = async (req, res) => {
   try {
     const { foodName, price, description } = req.body;
